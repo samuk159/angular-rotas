@@ -3,20 +3,26 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponentComponent } from './views/home-component/home-component.component';
-import { ProdutosComponentComponent } from './views/produtos-component/produtos-component.component';
-import { ListaProdutosComponentComponent } from './views/lista-produtos-component/lista-produtos-component.component';
+import { HomeComponent } from './views/home/home.component';
+import { ListaProdutosComponent } from './views/lista-produtos/lista-produtos.component';
+import { PrecoPipe } from './pipes/preco.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponentComponent,
-    ProdutosComponentComponent,
-    ListaProdutosComponentComponent
+    HomeComponent,
+    ListaProdutosComponent,
+    PrecoPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
