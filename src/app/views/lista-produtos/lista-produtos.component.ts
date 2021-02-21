@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Produto } from 'src/app/models/produto.model';
+import { ProdutoService } from 'src/app/services/produto.service';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -16,16 +17,16 @@ export class ListaProdutosComponent implements OnInit {
 
   constructor(
     private toastr: ToastrService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private produtoService: ProdutoService
   ) { }
 
   ngOnInit() {
-    this.produtos.push(new Produto("Camiseta", 30.99));
-    this.produtos.push(new Produto("Calça Jeans", 100.99));
+    this.produtos = this.produtoService.getProdutos();
   }
 
   excluir(index) {
-    this.produtos.splice(index, 1);
+    this.produtoService.excluirProduto(index);
     this.toastr.success('Excluído com sucesso');
   }
 

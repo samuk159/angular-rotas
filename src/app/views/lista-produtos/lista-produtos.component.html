@@ -30,7 +30,7 @@
                         class="btn btn-primary mr-1">
                         Editar
                     </button>
-                    <button (click)="excluir(i)"
+                    <button (click)="abrirModalExclusao(templateModalExclusao, i)"
                         class="btn btn-danger ml-1">
                         Excluír
                     </button>
@@ -39,3 +39,19 @@
         </table>
     </div>
 </div>
+
+<ng-template #templateModalExclusao>
+    <div class="modal-header">
+      Excluír produto
+    </div>
+    <div *ngIf="indiceExclusao > -1" class="modal-body">
+      Tem certeza de que deseja excluir o produto 
+      {{produtos[indiceExclusao].nome}}?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" 
+        (click)="fecharModalExclusao(false)">Não</button>
+      <button class="btn btn-primary"
+        (click)="fecharModalExclusao(true)">Sim</button>
+    </div>
+</ng-template>
