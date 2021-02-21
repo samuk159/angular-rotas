@@ -1,0 +1,25 @@
+<div class="row justify-content-center mt-3">
+    <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 *ngIf="true">Adicionar produto</h5>
+                <h5 *ngIf="false">Editar produto</h5>
+            </div>
+            <div class="card-body">
+                <label>Nome:</label>
+                <input type="text" [(ngModel)]="produto.nome" 
+                class="form-control">
+                <br>
+                <label>Preço:</label>
+                <input type="text" [(ngModel)]="produto.preco"
+                class="form-control">   
+            </div>
+            <div class="card-footer">
+                <button (click)="salvar()" 
+                class="btn btn-success float-right">
+                Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
