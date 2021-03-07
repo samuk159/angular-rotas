@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Produto } from 'src/app/models/produto.model';
 import { ProdutoService } from 'src/app/services/produto.service';
@@ -12,14 +12,24 @@ import { ProdutoService } from 'src/app/services/produto.service';
 export class FormularioProdutoComponent implements OnInit {
 
   produto: Produto = new Produto(null, null);
+  indice = -1;
 
   constructor(
     private toastr: ToastrService,
     private produtoService: ProdutoService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(parametros => {
+      if (parametros.index) {
+        this.indice = parametros.index;
+        this.produto = this.produtoService.getProdutoByIndex(
+          parametros.index
+        );
+      }
+    });
   }
 
   salvar() {
@@ -37,7 +47,14 @@ export class FormularioProdutoComponent implements OnInit {
       this.produto.preco.toString().replace(',', '.')
     );
 
-    this.produtoService.adicionarProduto(this.produto);
+    if (this.indice) {
+      this.produtoService.editarProduto(
+        this.indice, this.produto
+      );
+    } else {
+      this.produtoService.adicionarProduto(this.produto);
+    }
+    
     this.toastr.success('Salvo com sucesso');
     this.router.navigate(['produtos']);
   }

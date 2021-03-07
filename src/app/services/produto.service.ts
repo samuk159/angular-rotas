@@ -17,8 +17,16 @@ export class ProdutoService {
     return this.produtos;
   }
 
+  public getProdutoByIndex(index) {
+    return this.produtos[index];
+  }
+
   public adicionarProduto(produto: Produto) {
     this.produtos.unshift(produto);
+  }
+
+  public editarProduto(index, produto: Produto) {
+    this.produtos[index] = produto;
   }
 
   public excluirProduto(index) {
