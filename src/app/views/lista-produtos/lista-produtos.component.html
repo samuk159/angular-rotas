@@ -4,7 +4,7 @@
             <div class="col-auto">
                 <h5>Lista de Produtos</h5>
             </div>
-            <div class="col-auto">
+            <div *ngIf="isAdmin" class="col-auto">
                 <button class="btn btn-success"
                     routerLink="novo">Novo Produto</button>
             </div>
@@ -15,7 +15,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Preço</th>
-                <th>Ações</th>
+                <th *ngIf="isAdmin">Ações</th>
             </tr>
             <tr *ngFor="let produto of produtos; let i = index">
                 <td>{{produto.nome}}</td>
@@ -25,7 +25,7 @@
                     </span>
                     {{produto.preco | preco}}
                 </td>
-                <td>
+                <td *ngIf="isAdmin">
                     <button [routerLink]="i"
                         class="btn btn-primary mr-1">
                         Editar
