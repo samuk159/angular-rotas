@@ -8,7 +8,7 @@ import { Usuario } from '../models/usuario.model';
 export class UsuarioService {
 
   private usuarios: Usuario[] = [];
-  private usuarioLogado: Usuario;
+  usuarioLogado: Usuario;
   usuarioLogadoEmitter = new EventEmitter<Usuario>();
 
   constructor() { 

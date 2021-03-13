@@ -27,10 +27,8 @@ export class ListaProdutosComponent implements OnInit {
 
   ngOnInit() {
     this.produtos = this.produtoService.getProdutos();
-    this.usuarioService.usuarioLogadoEmitter
-    .subscribe(usuario => {
-        this.isAdmin = usuario && usuario.isAdmin;
-    });
+    this.isAdmin = this.usuarioService.usuarioLogado 
+      && this.usuarioService.usuarioLogado.isAdmin;
   }
 
   excluir(index) {
