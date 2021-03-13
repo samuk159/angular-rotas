@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
+import { Usuario } from './models/usuario.model';
+import { UsuarioService } from './services/usuario.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +10,15 @@ import {  Router } from '@angular/router';
 })
 export class AppComponent {
   
-  isAuth = true;
+  usuarioLogado: Usuario;
 
-  constructor() {
-    this.isAuth = window.location.pathname.startsWith('/auth');
+  constructor(
+    private usuarioService: UsuarioService
+  ) {
+    this.usuarioService.usuarioLogadoEmitter
+    .subscribe(usuario => {
+        this.usuarioLogado = usuario;
+    });
   }
 
 }

@@ -6,7 +6,7 @@ import { Produto } from '../models/produto.model';
 })
 export class ProdutoService {
 
-  produtos: Produto[] = [];
+  private produtos: Produto[] = [];
 
   constructor() { 
     this.produtos.push(new Produto("Camiseta", 30.99));
