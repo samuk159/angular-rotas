@@ -10,8 +10,6 @@ import { UsuarioService } from './services/usuario.service';
 })
 export class AppComponent {
 
-  constructor(
-    public usuarioService: UsuarioService
-  ) { }
+  constructor() { }
 
 }

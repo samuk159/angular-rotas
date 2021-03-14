@@ -11,11 +11,13 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormularioProdutoComponent } from './views/produtos/formulario-produto/formulario-produto.component';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './containers/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
