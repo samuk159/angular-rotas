@@ -9,16 +9,9 @@ import { UsuarioService } from './services/usuario.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
-  usuarioLogado: Usuario;
 
   constructor(
-    private usuarioService: UsuarioService
-  ) {
-    this.usuarioService.usuarioLogadoEmitter
-    .subscribe(usuario => {
-        this.usuarioLogado = usuario;
-    });
-  }
+    public usuarioService: UsuarioService
+  ) { }
 
 }

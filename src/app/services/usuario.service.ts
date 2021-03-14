@@ -1,5 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
@@ -8,21 +8,30 @@ import { Usuario } from '../models/usuario.model';
 export class UsuarioService {
 
   private usuarios: Usuario[] = [];
-  usuarioLogado: Usuario;
-  usuarioLogadoEmitter = new EventEmitter<Usuario>();
+  _usuarioLogado: Usuario;
 
-  constructor() { 
+  constructor(
+    private router: Router
+  ) { 
     this.usuarios.push(new Usuario('admin', 'admin', true));
     this.usuarios.push(new Usuario('teste', 'teste', false));
   }
 
   public login(usuario: Usuario) {
-    this.usuarioLogado = this.usuarios.find(u => {
+    this._usuarioLogado = this.usuarios.find(u => {
       return u.login === usuario.login 
         && u.senha === usuario.senha;
     });
 
-    this.usuarioLogadoEmitter.emit(this.usuarioLogado);
-    return this.usuarioLogado;
+    return this._usuarioLogado;
+  }
+
+  public logout() {
+    this._usuarioLogado = null;
+    this.router.navigate(['/auth/login']);
+  }
+
+  get usuarioLogado() {
+    return this._usuarioLogado;
   }
 }
