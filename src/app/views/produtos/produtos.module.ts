@@ -8,7 +8,6 @@ import { FormularioProdutoComponent } from './formulario-produto/formulario-prod
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     ListaProdutosComponent,

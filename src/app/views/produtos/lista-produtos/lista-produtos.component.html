@@ -4,14 +4,21 @@
             <div class="col-auto">
                 <h5>Lista de Produtos</h5>
             </div>
-            <div *ngIf="isAdmin" class="col-auto">
+            <div *ngIf="isAdmin && !loading" class="col-auto">
                 <button class="btn btn-success"
                     routerLink="novo">Novo Produto</button>
             </div>
         </div>        
     </div>
     <div class="card-body">
-        <table class="table">
+        <div *ngIf="loading" 
+            class="row justify-content-center my-5 py-5">
+            <div class="col-auto">
+                <div class="spinner-border"></div>
+            </div>
+        </div>        
+
+        <table *ngIf="!loading" class="table">
             <tr>
                 <th>Nome</th>
                 <th>Preço</th>
@@ -25,8 +32,8 @@
                     </span>
                     {{produto.preco | preco}}
                 </td>
-                <td *ngIf="isAdmin">
-                    <button [routerLink]="i"
+                <td *ngIf="isAdmin && !loading">
+                    <button [routerLink]="produto.id"
                         class="btn btn-primary mr-1">
                         Editar
                     </button>

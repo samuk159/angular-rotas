@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Produto } from '../models/produto.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+const url = environment.apiUrl + 'produtos/';
 
 @Injectable({
   providedIn: 'root'
@@ -8,29 +13,28 @@ export class ProdutoService {
 
   private produtos: Produto[] = [];
 
-  constructor() { 
-    this.produtos.push(new Produto("Camiseta", 30.99));
-    this.produtos.push(new Produto("Calça Jeans", 100.99));
+  constructor(
+    private http: HttpClient
+  ) {}
+
+  public buscarTodos(): Observable<Produto[]> {
+    return this.http.get<Produto[]>(url);
   }
 
-  public getProdutos() {
-    return this.produtos;
+  public buscarPorId(id): Observable<Produto> {
+    return this.http.get<Produto>(url + id);
   }
 
-  public getProdutoByIndex(index) {
-    return this.produtos[index];
+  public criar(produto: Produto): Observable<Produto> {
+    return this.http.post<Produto>(url, produto);
   }
 
-  public adicionarProduto(produto: Produto) {
-    this.produtos.unshift(produto);
+  public atualizar(produto: Produto): Observable<Produto> {
+    return this.http.put<Produto>(url + produto.id, produto);
   }
 
-  public editarProduto(index, produto: Produto) {
-    this.produtos[index] = produto;
-  }
-
-  public excluirProduto(index) {
-    this.produtos.splice(index, 1);
+  public excluir(id): Observable<any> {
+    return this.http.delete(url + id);
   }
 
 }

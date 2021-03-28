@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { Produto } from 'src/app/models/produto.model';
 import { ProdutoService } from 'src/app/services/produto.service';
 
@@ -9,10 +10,12 @@ import { ProdutoService } from 'src/app/services/produto.service';
   templateUrl: './formulario-produto.component.html',
   styleUrls: ['./formulario-produto.component.scss']
 })
-export class FormularioProdutoComponent implements OnInit {
+export class FormularioProdutoComponent implements OnInit, OnDestroy {
 
-  produto: Produto = new Produto(null, null);
-  indice = -1;
+  produto: Produto = new Produto();
+  id = null;
+  inscricoes: Subscription[] = [];
+  loading = false;
 
   constructor(
     private toastr: ToastrService,
@@ -23,10 +26,20 @@ export class FormularioProdutoComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(parametros => {
-      if (parametros.index) {
-        this.indice = parametros.index;
-        this.produto = this.produtoService.getProdutoByIndex(
-          parametros.index
+      if (parametros.id) {
+        this.id = parametros.id;
+        this.loading = true;
+        this.inscricoes.push(
+          this.produtoService.buscarPorId(
+            parametros.id
+          ).subscribe(res => {
+            this.loading = false;
+            this.produto = res;
+          }, error => {
+            this.loading = false;
+            console.error(error);
+            this.toastr.error(error);
+          })
         );
       }
     });
@@ -47,16 +60,35 @@ export class FormularioProdutoComponent implements OnInit {
       this.produto.preco.toString().replace(',', '.')
     );
 
-    if (this.indice) {
-      this.produtoService.editarProduto(
-        this.indice, this.produto
+    let observable;
+
+    if (this.id) {
+      observable = this.produtoService.atualizar(
+        this.produto
       );
     } else {
-      this.produtoService.adicionarProduto(this.produto);
+      observable = this.produtoService.criar(this.produto);
     }
-    
-    this.toastr.success('Salvo com sucesso');
-    this.router.navigate(['produtos']);
+
+    this.loading = true;
+    this.inscricoes.push(
+      observable.subscribe(res => {
+        this.loading = false;
+        this.produto = res; 
+        this.toastr.success('Salvo com sucesso');
+        this.router.navigate(['produtos']);
+      }, error => {
+        this.loading = false;
+        console.error(error);
+        this.toastr.error(error);
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.inscricoes.forEach(inscricao => {
+      inscricao.unsubscribe();
+    });
   }
 
 }

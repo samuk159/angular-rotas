@@ -2,8 +2,8 @@
     <div class="col-xl-4 col-sm-6 col-12">
         <div class="card">
             <div class="card-header">
-                <h5 *ngIf="true">Adicionar produto</h5>
-                <h5 *ngIf="false">Editar produto</h5>
+                <h5 *ngIf="!id">Adicionar produto</h5>
+                <h5 *ngIf="id">Editar produto</h5>
             </div>
             <div class="card-body">
                 <label>Nome:</label>
@@ -15,14 +15,18 @@
                 class="form-control">   
             </div>
             <div class="card-footer">
-                <button routerLink="/produtos"
-                    class="btn btn-secondary">
-                    Voltar
-                </button>
-                <button (click)="salvar()" 
-                    class="btn btn-success float-right">
-                    Salvar
-                </button>
+                <div *ngIf="loading" class="spinner-border float-right"></div>
+
+                <div *ngIf="!loading">
+                    <button routerLink="/produtos"
+                        class="btn btn-secondary">
+                        Voltar
+                    </button>
+                    <button (click)="salvar()" 
+                        class="btn btn-success float-right">
+                        Salvar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
