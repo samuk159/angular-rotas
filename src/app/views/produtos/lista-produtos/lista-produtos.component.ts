@@ -21,6 +21,10 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
   inscricoes: Subscription[] = [];
   loading = false;
 
+  pagina = 0;
+  porPagina = 3;
+  totalDeElementos;
+
   constructor(
     private toastr: ToastrService,
     private modalService: BsModalService,
@@ -29,21 +33,27 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    /*this.isAdmin = this.usuarioService.usuarioLogado 
+      && this.usuarioService.usuarioLogado.isAdmin;*/
+    this.isAdmin = true;
+    this.buscar();
+  }
+
+  buscar() {
     this.loading = true;
     this.inscricoes.push(
-      this.produtoService.buscarTodos().subscribe(res => {
+      this.produtoService.buscarTodos(
+        this.pagina - 1, this.porPagina
+      ).subscribe(res => {
         this.loading = false;
-        this.produtos = res;
+        this.produtos = res.content;
+        this.totalDeElementos = res.totalElements;
       }, error => {
         this.loading = false;
         console.error(error);
         this.toastr.error(error);
       })
     );
-
-    /*this.isAdmin = this.usuarioService.usuarioLogado 
-      && this.usuarioService.usuarioLogado.isAdmin;*/
-    this.isAdmin = true;
   }
 
   excluir(index) {
@@ -75,6 +85,11 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
     }
 
     this.indiceExclusao = -1;
+  }
+
+  trocarDePagina(novaPagina) {
+    this.pagina = novaPagina;
+    this.buscar();
   }
 
   ngOnDestroy() {

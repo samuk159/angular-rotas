@@ -7,6 +7,7 @@ import { PrecoPipe } from 'src/app/pipes/preco.pipe';
 import { FormularioProdutoComponent } from './formulario-produto/formulario-produto.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     ProdutosRoutingModule,
     ModalModule.forRoot(),
-    FormsModule
+    FormsModule,
+    NgbPaginationModule
   ]
 })
 export class ProdutosModule { }

@@ -17,8 +17,10 @@ export class ProdutoService {
     private http: HttpClient
   ) {}
 
-  public buscarTodos(): Observable<Produto[]> {
-    return this.http.get<Produto[]>(url);
+  public buscarTodos(pagina, porPagina): Observable<any> {
+    return this.http.get<any>(
+      url + '?page=' + pagina + '&size=' + porPagina
+    );
   }
 
   public buscarPorId(id): Observable<Produto> {
