@@ -80,7 +80,14 @@ export class FormularioProdutoComponent implements OnInit, OnDestroy {
       }, error => {
         this.loading = false;
         console.error(error);
-        this.toastr.error(error);
+        
+        if (error.error) {
+          for (let campo in error.error) {
+            this.toastr.error(campo + ' ' + error.error[campo]);
+          }
+        } else {
+          this.toastr.error('Erro desconhecido');
+        }
       })
     );
   }

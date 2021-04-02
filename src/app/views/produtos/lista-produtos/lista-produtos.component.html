@@ -16,7 +16,31 @@
             <div class="col-auto">
                 <div class="spinner-border"></div>
             </div>
-        </div>        
+        </div>
+
+        <div class="row mb-3 align-items-end">
+            <div class="col">
+                <label>Pesquisar:</label>
+                <input type="search" class="form-control"
+                    [(ngModel)]="textoDeBusca">
+            </div>
+            <div class="col">
+                <label>Preço Mínimo:</label>
+                <input type="text" [(ngModel)]="precoMin"
+                    class="form-control">
+            </div>
+            <div class="col">
+                <label>Preço Máximo:</label>
+                <input type="text" [(ngModel)]="precoMax"
+                    class="form-control">
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                    (click)="buscar()">
+                    Buscar
+                </button>
+            </div>
+        </div>
 
         <table *ngIf="!loading" class="table">
             <tr>

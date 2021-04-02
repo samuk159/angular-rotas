@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Produto } from '../models/produto.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const url = environment.apiUrl + 'produtos/';
@@ -17,9 +17,27 @@ export class ProdutoService {
     private http: HttpClient
   ) {}
 
-  public buscarTodos(pagina, porPagina): Observable<any> {
+  public buscarTodos(
+    pagina, porPagina, nome, precoMin, precoMax
+  ): Observable<any> {
+    let parametros = new HttpParams();
+    parametros = parametros.set('page', pagina);
+    parametros = parametros.set('size', porPagina);
+
+    if (nome && nome.length) {
+      parametros = parametros.set('nome', nome);
+    }
+
+    if (precoMin && precoMin.length) {
+      parametros = parametros.set('precoMin', precoMin);
+    }
+
+    if (precoMax && precoMax.length) {
+      parametros = parametros.set('precoMax', precoMax);
+    }
+    
     return this.http.get<any>(
-      url + '?page=' + pagina + '&size=' + porPagina
+      url, { params: parametros }
     );
   }
 

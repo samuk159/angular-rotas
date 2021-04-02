@@ -25,6 +25,10 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
   porPagina = 3;
   totalDeElementos;
 
+  textoDeBusca;
+  precoMin;
+  precoMax;
+
   constructor(
     private toastr: ToastrService,
     private modalService: BsModalService,
@@ -43,7 +47,11 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.inscricoes.push(
       this.produtoService.buscarTodos(
-        this.pagina - 1, this.porPagina
+        this.pagina - 1, 
+        this.porPagina, 
+        this.textoDeBusca,
+        this.precoMin,
+        this.precoMax
       ).subscribe(res => {
         this.loading = false;
         this.produtos = res.content;
