@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="row mb-3 align-items-end">
+        <div *ngIf="!loading" class="row mb-3 align-items-end">
             <div class="col">
                 <label>Pesquisar:</label>
                 <input type="search" class="form-control"
@@ -76,6 +76,7 @@
                     [pageSize]="porPagina"
                     [collectionSize]="totalDeElementos"
                     (pageChange)="trocarDePagina($event)"
+                    [disabled]="loading"
                 >
                 </ngb-pagination>
             </div>
