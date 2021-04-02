@@ -6,7 +6,9 @@
             </div>
             <div *ngIf="isAdmin && !loading" class="col-auto">
                 <button class="btn btn-success"
-                    routerLink="novo">Novo Produto</button>
+                    routerLink="novo">
+                    <i class="fa fa-plus"></i> Novo Produto
+                </button>
             </div>
         </div>        
     </div>
@@ -37,7 +39,7 @@
             <div class="col-auto">
                 <button type="button" class="btn btn-primary"
                     (click)="buscar()">
-                    Buscar
+                    <i class="fa fa-search"></i> Buscar
                 </button>
             </div>
         </div>
@@ -59,11 +61,11 @@
                 <td *ngIf="isAdmin && !loading">
                     <button [routerLink]="produto.id"
                         class="btn btn-primary mr-1">
-                        Editar
+                        <i class="fa fa-edit"></i> Editar
                     </button>
                     <button (click)="abrirModalExclusao(templateModalExclusao, i)"
                         class="btn btn-danger ml-1">
-                        Excluír
+                        <i class="fa fa-trash"></i> Excluír
                     </button>
                 </td>
             </tr>
