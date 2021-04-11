@@ -13,8 +13,7 @@ const url = environment.apiUrl + 'categorias/';
 export class CategoriaService extends BaseService<Categoria> {
 
   constructor(
-    protected http: HttpClient,
-    url
+    protected http: HttpClient
   ) { 
     super(http, url);
   }

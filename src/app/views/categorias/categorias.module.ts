@@ -7,16 +7,14 @@ import { FormularioCategoriaComponent } from './formulario-categoria/formulario-
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ShareModule } from 'src/app/share/share/share.module';
 
 
 @NgModule({
   declarations: [ListaCategoriasComponent, FormularioCategoriaComponent],
   imports: [
-    CommonModule,
-    CategoriasRoutingModule,
-    ModalModule.forRoot(),
-    FormsModule,
-    NgbPaginationModule
+    ShareModule,
+    CategoriasRoutingModule
   ]
 })
 export class CategoriasModule { }

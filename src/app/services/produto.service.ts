@@ -13,8 +13,7 @@ const url = environment.apiUrl + 'produtos/';
 export class ProdutoService extends BaseService<Produto> {
 
   constructor(
-    protected http: HttpClient,
-    url
+    protected http: HttpClient
   ) {
     super(http, url);
   }

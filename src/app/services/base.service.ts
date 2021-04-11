@@ -3,14 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Base } from '../models/base.model';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class BaseService<Model extends Base> {
 
   constructor(
     protected http: HttpClient,
-    private url
+    protected url
   ) { }
 
   public buscarPorId(id): Observable<Model> {

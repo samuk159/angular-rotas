@@ -7,18 +7,18 @@
             </div>
             <div class="card-body">
                 <label>Nome:</label>
-                <input type="text" [(ngModel)]="produto.nome" 
+                <input type="text" [(ngModel)]="model.nome" 
                 class="form-control">
                 <br>
                 <label>Preço:</label>
-                <input type="text" [(ngModel)]="produto.preco"
+                <input type="text" [(ngModel)]="model.preco"
                 class="form-control">   
             </div>
             <div class="card-footer">
                 <div *ngIf="loading" class="spinner-border float-right"></div>
 
                 <div *ngIf="!loading">
-                    <button routerLink="/produtos"
+                    <button routerLink="/models"
                         class="btn btn-secondary">
                         Voltar
                     </button>
