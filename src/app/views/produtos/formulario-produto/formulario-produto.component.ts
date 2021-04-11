@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { Categoria } from 'src/app/models/categoria.model';
 import { Produto } from 'src/app/models/produto.model';
+import { CategoriaService } from 'src/app/services/categoria.service';
 import { ProdutoService } from 'src/app/services/produto.service';
 
 @Component({
@@ -16,13 +18,16 @@ export class FormularioProdutoComponent implements OnInit, OnDestroy {
   id = null;
   inscricoes: Subscription[] = [];
   loading = false;
+  categorias: Categoria[] = [];
 
   constructor(
     private toastr: ToastrService,
     private produtoService: ProdutoService,
     private router: Router,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private categoriaService: CategoriaService
+  ) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(parametros => {
@@ -43,6 +48,15 @@ export class FormularioProdutoComponent implements OnInit, OnDestroy {
         );
       }
     });
+
+    this.inscricoes.push(
+      this.categoriaService.buscarTodos(0, 20, null).subscribe(res => {
+        this.categorias = res.content;
+      }, error => {
+        console.error(error);
+        this.toastr.error(error);
+      })
+    );
   }
 
   salvar() {

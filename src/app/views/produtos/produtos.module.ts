@@ -8,6 +8,7 @@ import { FormularioProdutoComponent } from './formulario-produto/formulario-prod
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     ProdutosRoutingModule,
     ModalModule.forRoot(),
     FormsModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgSelectModule
   ]
 })
 export class ProdutosModule { }
