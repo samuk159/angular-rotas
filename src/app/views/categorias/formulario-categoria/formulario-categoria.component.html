@@ -1,0 +1,29 @@
+<div class="row justify-content-center mt-3">
+    <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 *ngIf="!id">Adicionar categoria</h5>
+                <h5 *ngIf="id">Editar categoria</h5>
+            </div>
+            <div class="card-body">
+                <label>Nome:</label>
+                <input type="text" [(ngModel)]="categoria.nome" 
+                class="form-control">  
+            </div>
+            <div class="card-footer">
+                <div *ngIf="loading" class="spinner-border float-right"></div>
+
+                <div *ngIf="!loading">
+                    <button routerLink="/categorias"
+                        class="btn btn-secondary">
+                        Voltar
+                    </button>
+                    <button (click)="salvar()" 
+                        class="btn btn-success float-right">
+                        <i class="fa fa-save"></i> Salvar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

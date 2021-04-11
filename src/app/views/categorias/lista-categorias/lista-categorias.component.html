@@ -1,0 +1,86 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row justify-content-between">
+            <div class="col-auto">
+                <h5>Lista de Categorias</h5>
+            </div>
+            <div *ngIf="!loading" class="col-auto">
+                <button class="btn btn-success"
+                    routerLink="novo">
+                    <i class="fa fa-plus"></i> Nova Categoria
+                </button>
+            </div>
+        </div>        
+    </div>
+    <div class="card-body">
+        <div *ngIf="loading" 
+            class="row justify-content-center my-5 py-5">
+            <div class="col-auto">
+                <div class="spinner-border"></div>
+            </div>
+        </div>
+
+        <div *ngIf="!loading" class="row mb-3 align-items-end">
+            <div class="col">
+                <label>Pesquisar:</label>
+                <input type="search" class="form-control"
+                    [(ngModel)]="textoDeBusca">
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                    (click)="buscar()">
+                    <i class="fa fa-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+
+        <table *ngIf="!loading" class="table">
+            <tr>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+            <tr *ngFor="let categoria of categorias; let i = index">
+                <td>{{categoria.nome}}</td>
+                <td *ngIf="!loading">
+                    <button [routerLink]="categoria.id"
+                        class="btn btn-primary mr-1">
+                        <i class="fa fa-edit"></i> Editar
+                    </button>
+                    <button (click)="abrirModalExclusao(templateModalExclusao, i)"
+                        class="btn btn-danger ml-1">
+                        <i class="fa fa-trash"></i> Excluír
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <ngb-pagination
+                    [(page)]="pagina"
+                    [pageSize]="porPagina"
+                    [collectionSize]="totalDeElementos"
+                    (pageChange)="trocarDePagina($event)"
+                    [disabled]="loading"
+                >
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #templateModalExclusao>
+    <div class="modal-header">
+      Excluír categoria
+    </div>
+    <div *ngIf="indiceExclusao > -1" class="modal-body">
+      Tem certeza de que deseja excluir a categoria 
+      {{categorias[indiceExclusao].nome}}?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" 
+        (click)="fecharModalExclusao(false)">Não</button>
+      <button class="btn btn-primary"
+        (click)="fecharModalExclusao(true)">Sim</button>
+    </div>
+</ng-template>

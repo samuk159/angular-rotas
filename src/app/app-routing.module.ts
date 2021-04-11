@@ -20,6 +20,10 @@ const routes: Routes = [
       { 
         path: 'produtos',
         loadChildren: './views/produtos/produtos.module#ProdutosModule'
+      },
+      {
+        path: 'categorias',
+        loadChildren: './views/categorias/categorias.module#CategoriasModule'
       }
     ]
   },
