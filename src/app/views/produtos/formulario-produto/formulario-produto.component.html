@@ -12,7 +12,12 @@
                 <br>
                 <label>Preço:</label>
                 <input type="text" [(ngModel)]="model.preco"
-                class="form-control">   
+                class="form-control"> 
+                <br>
+                <label>Categoria:</label>  
+                <ng-select [items]="categorias" [(ngModel)]="model.categoria"
+                    bindLabel="nome">
+                </ng-select>
             </div>
             <div class="card-footer">
                 <div *ngIf="loading" class="spinner-border float-right"></div>

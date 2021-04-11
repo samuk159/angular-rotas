@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShareModule } from 'src/app/share/share/share.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ShareModule } from 'src/app/share/share/share.module';
   ],
   imports: [
     ShareModule,
-    ProdutosRoutingModule
+    ProdutosRoutingModule,
+    NgSelectModule
   ]
 })
 export class ProdutosModule { }

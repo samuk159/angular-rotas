@@ -48,6 +48,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Preço</th>
+                <th>Categoria</th>
                 <th *ngIf="isAdmin">Ações</th>
             </tr>
             <tr *ngFor="let produto of produtos; let i = index">
@@ -58,6 +59,7 @@
                     </span>
                     {{produto.preco | preco}}
                 </td>
+                <td>{{produto.categoria?.nome}}</td>
                 <td *ngIf="isAdmin && !loading">
                     <button [routerLink]="produto.id"
                         class="btn btn-primary mr-1">

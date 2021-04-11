@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { Categoria } from 'src/app/models/categoria.model';
 import { Produto } from 'src/app/models/produto.model';
+import { CategoriaService } from 'src/app/services/categoria.service';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { FormularioBaseComponent } from 'src/app/share/formulario-base/formulario-base.component';
 
@@ -14,11 +16,14 @@ import { FormularioBaseComponent } from 'src/app/share/formulario-base/formulari
 export class FormularioProdutoComponent 
   extends FormularioBaseComponent<Produto> {
 
+    categorias: Categoria[] = [];
+
   constructor(
     public toastr: ToastrService,
     public produtoService: ProdutoService,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private categoriaService: CategoriaService
   ) { 
     super(
       toastr,
@@ -29,6 +34,15 @@ export class FormularioProdutoComponent
     );
     
     this.model = new Produto();
+
+    this.inscricoes.push(
+      this.categoriaService.buscarTodos(0, 20, null).subscribe(res => {
+        this.categorias = res.content;
+      }, error => {
+        console.error(error);
+        this.toastr.error(error);
+      })
+    );
   }
 
   validar() {
