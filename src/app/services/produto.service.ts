@@ -11,8 +11,6 @@ const url = environment.apiUrl + 'produtos/';
 })
 export class ProdutoService {
 
-  private produtos: Produto[] = [];
-
   constructor(
     private http: HttpClient
   ) {}
