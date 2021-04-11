@@ -6,8 +6,7 @@ import { Subscription } from 'rxjs';
 import { Base } from 'src/app/models/base.model';
 import { BaseService } from 'src/app/services/base.service';
 
-@Component({ template: '' })
-export class FormularioBaseComponent<Model extends Base>
+export abstract class FormularioBaseComponent<Model extends Base>
   implements OnInit, OnDestroy {
 
   model: Model;
@@ -19,11 +18,12 @@ export class FormularioBaseComponent<Model extends Base>
     public toastr: ToastrService,
     public service: BaseService<Model>,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public rotaSalvo: string
   ) { }
 
   ngOnInit() {
-    console.log(this.route);
+    console.log(this.route.url);
 
     this.route.params.subscribe(parametros => {
       if (parametros.id) {
@@ -45,7 +45,7 @@ export class FormularioBaseComponent<Model extends Base>
     });
   }
 
-  validar() {}
+  abstract validar();
 
   salvar() {
     this.validar();
@@ -64,7 +64,7 @@ export class FormularioBaseComponent<Model extends Base>
         this.loading = false;
         this.model = res; 
         this.toastr.success('Salvo com sucesso');
-        this.router.navigate(['produtos']);
+        this.router.navigate([this.rotaSalvo]);
       }, error => {
         this.loading = false;
         console.error(error);

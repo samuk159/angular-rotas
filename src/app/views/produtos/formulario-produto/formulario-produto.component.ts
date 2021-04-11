@@ -24,8 +24,10 @@ export class FormularioProdutoComponent
       toastr,
       produtoService,
       router,
-      route
+      route,
+      'produtos'
     );
+    
     this.model = new Produto();
   }
 

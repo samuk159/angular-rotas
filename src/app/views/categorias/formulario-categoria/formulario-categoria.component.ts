@@ -4,89 +4,38 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
+import { FormularioBaseComponent } from 'src/app/share/formulario-base/formulario-base.component';
 
 @Component({
   selector: 'app-formulario-categoria',
   templateUrl: './formulario-categoria.component.html',
   styleUrls: ['./formulario-categoria.component.scss']
 })
-export class FormularioCategoriaComponent implements OnInit, OnDestroy {
-
-  categoria: Categoria = new Categoria();
-  id = null;
-  inscricoes: Subscription[] = [];
-  loading = false;
+export class FormularioCategoriaComponent 
+  extends FormularioBaseComponent<Categoria> {
 
   constructor(
-    private toastr: ToastrService,
-    private categoriaService: CategoriaService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+    public toastr: ToastrService,
+    public categoriaService: CategoriaService,
+    public router: Router,
+    public route: ActivatedRoute
+  ) { 
+    super(
+      toastr,
+      categoriaService,
+      router,
+      route,
+      'categorias'
+    );
 
-  ngOnInit() {
-    this.route.params.subscribe(parametros => {
-      if (parametros.id) {
-        this.id = parametros.id;
-        this.loading = true;
-        this.inscricoes.push(
-          this.categoriaService.buscarPorId(
-            parametros.id
-          ).subscribe(res => {
-            this.loading = false;
-            this.categoria = res;
-          }, error => {
-            this.loading = false;
-            console.error(error);
-            this.toastr.error(error);
-          })
-        );
-      }
-    });
+    this.model = new Categoria();
   }
 
-  salvar() {
-    if (!this.categoria.nome) {
+  validar() {
+    if (!this.model.nome) {
       this.toastr.error('Por favor informe o nome');
       return;
     }
-
-    let observable;
-
-    if (this.id) {
-      observable = this.categoriaService.atualizar(
-        this.categoria
-      );
-    } else {
-      observable = this.categoriaService.criar(this.categoria);
-    }
-
-    this.loading = true;
-    this.inscricoes.push(
-      observable.subscribe(res => {
-        this.loading = false;
-        this.categoria = res; 
-        this.toastr.success('Salvo com sucesso');
-        this.router.navigate(['categorias']);
-      }, error => {
-        this.loading = false;
-        console.error(error);
-        
-        if (error.error) {
-          for (let campo in error.error) {
-            this.toastr.error(campo + ' ' + error.error[campo]);
-          }
-        } else {
-          this.toastr.error('Erro desconhecido');
-        }
-      })
-    );
-  }
-
-  ngOnDestroy() {
-    this.inscricoes.forEach(inscricao => {
-      inscricao.unsubscribe();
-    });
   }
 
 }

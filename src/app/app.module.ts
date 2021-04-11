@@ -14,8 +14,7 @@ import { FormularioBaseComponent } from './share/formulario-base/formulario-base
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent,
-    FormularioBaseComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
