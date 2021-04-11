@@ -3,17 +3,21 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Categoria } from '../models/categoria.model';
+import { BaseService } from './base.service';
 
 const url = environment.apiUrl + 'categorias/';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class CategoriaService extends BaseService<Categoria> {
 
   constructor(
-    private http: HttpClient
-  ) { }
+    protected http: HttpClient,
+    url
+  ) { 
+    super(http, url);
+  }
 
   public buscarTodos(
     pagina, porPagina, nome
@@ -31,19 +35,4 @@ export class CategoriaService {
     );
   }
 
-  public buscarPorId(id): Observable<Categoria> {
-    return this.http.get<Categoria>(url + id);
-  }
-
-  public criar(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(url, categoria);
-  }
-
-  public atualizar(categoria: Categoria): Observable<Categoria> {
-    return this.http.put<Categoria>(url + categoria.id, categoria);
-  }
-
-  public excluir(id): Observable<any> {
-    return this.http.delete(url + id);
-  }
 }

@@ -1,4 +1,5 @@
-export class Categoria {
-    id: number;
+import { Base } from "./base.model";
+
+export class Categoria extends Base {
     nome: string;
 }
