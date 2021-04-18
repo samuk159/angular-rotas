@@ -2,8 +2,10 @@ import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { Categoria } from 'src/app/models/categoria.model';
 import { Produto } from 'src/app/models/produto.model';
 import { Usuario } from 'src/app/models/usuario.model';
+import { CategoriaService } from 'src/app/services/categoria.service';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -28,15 +30,28 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
   textoDeBusca;
   precoMin;
   precoMax;
+  categoria;
+
+  categorias: Categoria[] = [];
 
   constructor(
     private toastr: ToastrService,
     private modalService: BsModalService,
     private produtoService: ProdutoService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private categoriaService: CategoriaService
   ) { }
 
   ngOnInit() {
+    this.inscricoes.push(
+      this.categoriaService.buscarTodos(0, 20, null).subscribe(res => {
+        this.categorias = res.content;
+      }, error => {
+        console.error(error);
+        this.toastr.error(error);
+      })
+    );
+    
     /*this.isAdmin = this.usuarioService.usuarioLogado 
       && this.usuarioService.usuarioLogado.isAdmin;*/
     this.isAdmin = true;
@@ -51,7 +66,8 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
         this.porPagina, 
         this.textoDeBusca,
         this.precoMin,
-        this.precoMax
+        this.precoMax,
+        this.categoria
       ).subscribe(res => {
         this.loading = false;
         this.produtos = res.content;
