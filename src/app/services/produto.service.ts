@@ -19,7 +19,7 @@ export class ProdutoService extends BaseService<Produto> {
   }
 
   public buscarTodos(
-    pagina, porPagina, nome, precoMin, precoMax
+    pagina, porPagina, nome, precoMin, precoMax, categoria
   ): Observable<any> {
     let parametros = new HttpParams();
     parametros = parametros.set('page', pagina);
@@ -27,6 +27,10 @@ export class ProdutoService extends BaseService<Produto> {
 
     if (nome && nome.length) {
       parametros = parametros.set('nome', nome);
+    }
+
+    if (categoria && categoria.length) {
+      parametros = parametros.set('categoria', categoria);
     }
 
     if (precoMin && precoMin.length) {

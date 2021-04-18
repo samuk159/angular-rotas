@@ -36,6 +36,12 @@
                 <input type="text" [(ngModel)]="precoMax"
                     class="form-control">
             </div>
+            <div class="col">
+                <label>Categoria:</label>
+                <ng-select [items]="categorias" [(ngModel)]="categoria"
+                    bindLabel="nome" bindValue="nome">
+                </ng-select>
+            </div>
             <div class="col-auto">
                 <button type="button" class="btn btn-primary"
                     (click)="buscar()">
