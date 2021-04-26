@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -9,9 +10,10 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   usuario: Usuario = new Usuario();
+  inscricoes: Subscription[] = [];
 
   constructor(
     private usuarioService: UsuarioService,
@@ -33,13 +35,26 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    let usuario = this.usuarioService.login(this.usuario);
+    let inscricao = this.usuarioService.login(this.usuario)
+    .subscribe(res => {
+      if (res) {
+        localStorage.setItem('token', res);
+        this.router.navigate(['/home']);
+      } else {
+        this.toastr.error('Usuário ou senha incorreto');
+      }
+    }, erro => {
+      console.error(erro);
+      this.toastr.error(erro.error);
+    });
 
-    if (usuario) {
-      this.router.navigate(['/home']);
-    } else {
-      this.toastr.error('Usuário ou senha incorreto');
-    }
+    this.inscricoes.push(inscricao);
+  }
+
+  ngOnDestroy(): void {
+    this.inscricoes.forEach(inscricao => {
+      inscricao.unsubscribe();
+    });
   }
 
 }

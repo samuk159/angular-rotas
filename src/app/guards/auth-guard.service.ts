@@ -13,13 +13,13 @@ export class AuthGuardService implements CanActivate {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    /*if (this.usuarioService.usuarioLogado) {
+    let token = localStorage.getItem('token');
+
+    if (token && token.length) {
       return true;
     } else {
       this.usuarioService.logout();
       return false;
-    }*/
-
-    return true;
+    }
   }
 }

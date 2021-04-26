@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
@@ -7,31 +10,21 @@ import { Usuario } from '../models/usuario.model';
 })
 export class UsuarioService {
 
-  private usuarios: Usuario[] = [];
-  _usuarioLogado: Usuario;
-
   constructor(
-    private router: Router
-  ) { 
-    this.usuarios.push(new Usuario('admin', 'admin', true));
-    this.usuarios.push(new Usuario('teste', 'teste', false));
-  }
+    private router: Router,
+    private http: HttpClient
+  ) { }
 
-  public login(usuario: Usuario) {
-    this._usuarioLogado = this.usuarios.find(u => {
-      return u.login === usuario.login 
-        && u.senha === usuario.senha;
-    });
-
-    return this._usuarioLogado;
+  public login(usuario: Usuario): Observable<any> {
+    return this.http.post(
+      environment.apiUrl + 'auth/login', 
+      usuario, 
+      { responseType: 'text' }
+    );
   }
 
   public logout() {
-    this._usuarioLogado = null;
+    localStorage.removeItem('token');
     this.router.navigate(['/auth/login']);
-  }
-
-  get usuarioLogado() {
-    return this._usuarioLogado;
   }
 }
