@@ -38,7 +38,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     let inscricao = this.usuarioService.login(this.usuario)
     .subscribe(res => {
       if (res) {
-        localStorage.setItem('token', res);
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('isAdmin', res.isAdmin ? 'true' : 'false');
         this.router.navigate(['/home']);
       } else {
         this.toastr.error('Usuário ou senha incorreto');

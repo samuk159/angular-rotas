@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-lista-categorias',
@@ -15,6 +16,7 @@ export class ListaCategoriasComponent implements OnInit, OnDestroy {
   categorias: Categoria[] = [];
   modalExclusao: BsModalRef;
   indiceExclusao = -1;
+  isAdmin = false;
   inscricoes: Subscription[] = [];
   loading = false;
 
@@ -27,10 +29,12 @@ export class ListaCategoriasComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private usuarioService: UsuarioService,
   ) { }
 
   ngOnInit() {
+    this.isAdmin = this.usuarioService.isAdmin();
     this.buscar();
   }
 

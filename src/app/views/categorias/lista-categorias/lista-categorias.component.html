@@ -4,7 +4,7 @@
             <div class="col-auto">
                 <h5>Lista de Categorias</h5>
             </div>
-            <div *ngIf="!loading" class="col-auto">
+            <div *ngIf="isAdmin && !loading" class="col-auto">
                 <button class="btn btn-success"
                     routerLink="novo">
                     <i class="fa fa-plus"></i> Nova Categoria
@@ -37,11 +37,11 @@
         <table *ngIf="!loading" class="table">
             <tr>
                 <th>Nome</th>
-                <th>Ações</th>
+                <th *ngIf="isAdmin">Ações</th>
             </tr>
             <tr *ngFor="let categoria of categorias; let i = index">
                 <td>{{categoria.nome}}</td>
-                <td *ngIf="!loading">
+                <td *ngIf="isAdmin && !loading">
                     <button [routerLink]="categoria.id"
                         class="btn btn-primary mr-1">
                         <i class="fa fa-edit"></i> Editar

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminGuardService } from 'src/app/guards/admin-guard.service';
 import { FormularioCategoriaComponent } from './formulario-categoria/formulario-categoria.component';
 import { ListaCategoriasComponent } from './lista-categorias/lista-categorias.component';
 
@@ -11,10 +12,13 @@ const routes: Routes = [
   },
   { 
     path: 'novo', 
-    component: FormularioCategoriaComponent
+    component: FormularioCategoriaComponent,
+    canActivate: [AdminGuardService] 
   },
   { 
-    path: ':id', component: FormularioCategoriaComponent
+    path: ':id', 
+    component: FormularioCategoriaComponent,
+    canActivate: [AdminGuardService] 
   }
 ];
 

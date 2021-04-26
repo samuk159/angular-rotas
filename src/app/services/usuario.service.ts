@@ -15,16 +15,19 @@ export class UsuarioService {
     private http: HttpClient
   ) { }
 
-  public login(usuario: Usuario): Observable<any> {
-    return this.http.post(
-      environment.apiUrl + 'auth/login', 
-      usuario, 
-      { responseType: 'text' }
+  public login(usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(
+      environment.apiUrl + 'auth/login',
+      usuario
     );
   }
 
   public logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['/auth/login']);
+  }
+
+  public isAdmin() {
+    return localStorage.getItem('isAdmin') === 'true';
   }
 }

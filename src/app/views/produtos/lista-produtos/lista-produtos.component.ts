@@ -52,9 +52,7 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
       })
     );
 
-    /*this.isAdmin = this.usuarioService.usuarioLogado 
-      && this.usuarioService.usuarioLogado.isAdmin;*/
-    this.isAdmin = true;
+    this.isAdmin = this.usuarioService.isAdmin();
     this.buscar();
   }
 
