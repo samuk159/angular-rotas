@@ -65,15 +65,19 @@ export class FormularioProdutoComponent
     if (this.imagem) {
       this.toastr.warning('Salvando imagem');
       this.loading = true;
-      this.produtoService.salvarImagem(this.imagem, this.model.id).subscribe(res => {
-        this.loading = false;
-        this.toastr.success('Imagem salva com sucesso');
-        this.router.navigate(['produtos']);
-      }, erro => {
-        this.loading = false;
-        console.error(erro);
-        this.toastr.error('Houve um erro ao salvar a imagem');
-      });
+      this.inscricoes.push(
+        this.produtoService.salvarImagem(
+          this.imagem, this.model.id
+        ).subscribe(res => {
+          this.loading = false;
+          this.toastr.success('Imagem salva com sucesso');
+          this.router.navigate(['produtos']);
+        }, erro => {
+          this.loading = false;
+          console.error(erro);
+          this.toastr.error('Houve um erro ao salvar a imagem');
+        })
+      );
     } else {
       this.router.navigate(['produtos']);
     }
@@ -81,6 +85,21 @@ export class FormularioProdutoComponent
 
   imagemSelecionada(event) {
     this.imagem = event.target.files[0];
+  }
+
+  removerImagem() {
+    this.loading = true;
+    this.inscricoes.push(
+      this.produtoService.removerImagem(this.model.id).subscribe(res => {
+        this.loading = false;
+        this.toastr.success('Imagem removida com sucesso');
+        this.model = res;
+      }, erro => {
+        this.loading = false;
+        console.error(erro);
+        this.toastr.error('Houve um erro ao remover a imagem');
+      })
+    );
   }
 
 }

@@ -68,4 +68,8 @@ export class ProdutoService extends BaseService<Produto> {
       }));
   }
 
+  public removerImagem(id): Observable<Produto> {
+    return this.http.delete<Produto>(url + 'imagem/' + id);
+  }
+
 }

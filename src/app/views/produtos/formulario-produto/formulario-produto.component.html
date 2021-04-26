@@ -9,8 +9,9 @@
                 <label>Imagem:</label>
                 <input type="file" class="form-control" 
                     (change)="imagemSelecionada($event)">
-                <button *ngIf="model.imagem" class="btn btn-danger btn-sm my-2"
-                    (click)="model.imagem = null">
+                <button *ngIf="!loading && model.imagem" 
+                    class="btn btn-danger btn-sm my-2"
+                    (click)="removerImagem()">
                     Remover Imagem
                 </button>
                 <br>
