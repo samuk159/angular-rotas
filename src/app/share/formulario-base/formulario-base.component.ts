@@ -18,13 +18,10 @@ export abstract class FormularioBaseComponent<Model extends Base>
     public toastr: ToastrService,
     public service: BaseService<Model>,
     public router: Router,
-    public route: ActivatedRoute,
-    public rotaSalvo: string
+    public route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    console.log(this.route.url);
-
     this.route.params.subscribe(parametros => {
       if (parametros.id) {
         this.id = parametros.id;
@@ -46,6 +43,7 @@ export abstract class FormularioBaseComponent<Model extends Base>
   }
 
   abstract validar();
+  abstract salvo();
 
   salvar() {
     this.validar();
@@ -64,7 +62,7 @@ export abstract class FormularioBaseComponent<Model extends Base>
         this.loading = false;
         this.model = res; 
         this.toastr.success('Salvo com sucesso');
-        this.router.navigate([this.rotaSalvo]);
+        this.salvo();
       }, error => {
         this.loading = false;
         console.error(error);

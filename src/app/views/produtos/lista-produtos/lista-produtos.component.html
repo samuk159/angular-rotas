@@ -52,12 +52,17 @@
 
         <table *ngIf="!loading" class="table">
             <tr>
+                <th>Imagem</th>
                 <th>Nome</th>
                 <th>Preço</th>
                 <th>Categoria</th>
                 <th *ngIf="isAdmin">Ações</th>
             </tr>
             <tr *ngFor="let produto of produtos; let i = index">
+                <td>
+                    <img *ngIf="produto.imagemSrc" [src]="produto.imagemSrc"
+                        width="100">
+                </td>
                 <td>{{produto.nome}}</td>
                 <td>
                     <span class="font-weight-bold mr-1">

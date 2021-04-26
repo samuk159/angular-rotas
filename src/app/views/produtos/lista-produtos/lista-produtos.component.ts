@@ -70,6 +70,14 @@ export class ListaProdutosComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.produtos = res.content;
         this.totalDeElementos = res.totalElements;
+
+        this.produtos.forEach(produto => {
+          this.inscricoes.push(
+            this.produtoService.abrirImagem(produto.id).subscribe(res => {
+              produto.imagemSrc = res;
+            })
+          );
+        });
       }, error => {
         this.loading = false;
         console.error(error);

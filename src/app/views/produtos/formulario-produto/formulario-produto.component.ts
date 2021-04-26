@@ -16,7 +16,8 @@ import { FormularioBaseComponent } from 'src/app/share/formulario-base/formulari
 export class FormularioProdutoComponent 
   extends FormularioBaseComponent<Produto> {
 
-    categorias: Categoria[] = [];
+  categorias: Categoria[] = [];
+  imagem;
 
   constructor(
     public toastr: ToastrService,
@@ -29,8 +30,7 @@ export class FormularioProdutoComponent
       toastr,
       produtoService,
       router,
-      route,
-      'produtos'
+      route
     );
     
     this.model = new Produto();
@@ -59,6 +59,28 @@ export class FormularioProdutoComponent
     this.model.preco = Number(
       this.model.preco.toString().replace(',', '.')
     );
+  }
+
+  salvo() {
+    if (this.imagem) {
+      this.toastr.warning('Salvando imagem');
+      this.loading = true;
+      this.produtoService.salvarImagem(this.imagem, this.model.id).subscribe(res => {
+        this.loading = false;
+        this.toastr.success('Imagem salva com sucesso');
+        this.router.navigate(['produtos']);
+      }, erro => {
+        this.loading = false;
+        console.error(erro);
+        this.toastr.error('Houve um erro ao salvar a imagem');
+      });
+    } else {
+      this.router.navigate(['produtos']);
+    }
+  }
+
+  imagemSelecionada(event) {
+    this.imagem = event.target.files[0];
   }
 
 }

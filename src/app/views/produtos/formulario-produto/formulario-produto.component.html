@@ -6,13 +6,21 @@
                 <h5 *ngIf="id">Editar produto</h5>
             </div>
             <div class="card-body">
+                <label>Imagem:</label>
+                <input type="file" class="form-control" 
+                    (change)="imagemSelecionada($event)">
+                <button *ngIf="model.imagem" class="btn btn-danger btn-sm my-2"
+                    (click)="model.imagem = null">
+                    Remover Imagem
+                </button>
+                <br>
                 <label>Nome:</label>
                 <input type="text" [(ngModel)]="model.nome" 
-                class="form-control">
+                    class="form-control">
                 <br>
                 <label>Preço:</label>
                 <input type="text" [(ngModel)]="model.preco"
-                class="form-control"> 
+                    class="form-control"> 
                 <br>
                 <label>Categoria:</label>  
                 <ng-select [items]="categorias" [(ngModel)]="model.categoria"
@@ -23,7 +31,7 @@
                 <div *ngIf="loading" class="spinner-border float-right"></div>
 
                 <div *ngIf="!loading">
-                    <button routerLink="/models"
+                    <button routerLink="/produtos"
                         class="btn btn-secondary">
                         Voltar
                     </button>

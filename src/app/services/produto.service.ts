@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Produto } from '../models/produto.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseService } from './base.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 const url = environment.apiUrl + 'produtos/';
 
@@ -13,7 +15,8 @@ const url = environment.apiUrl + 'produtos/';
 export class ProdutoService extends BaseService<Produto> {
 
   constructor(
-    protected http: HttpClient
+    protected http: HttpClient,
+    private domSanitizer: DomSanitizer
   ) {
     super(http, url);
   }
@@ -44,6 +47,25 @@ export class ProdutoService extends BaseService<Produto> {
     return this.http.get<any>(
       url, { params: parametros }
     );
+  }
+
+  public salvarImagem(arquivo: File, id): Observable<Produto> {
+    let formData: FormData = new FormData();
+    formData.append('arquivo', arquivo);
+    
+    return this.http.post<Produto>(url + 'imagem/' + id, formData)
+  }
+
+  public abrirImagem(id) {
+    return this.http.get(url + 'imagem/' + id, { responseType: 'blob' })
+      .pipe(map(e => {
+        if (e)
+          return this.domSanitizer.bypassSecurityTrustUrl(
+            URL.createObjectURL(e)
+          );
+        else 
+          return e;
+      }));
   }
 
 }

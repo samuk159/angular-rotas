@@ -24,8 +24,7 @@ export class FormularioCategoriaComponent
       toastr,
       categoriaService,
       router,
-      route,
-      'categorias'
+      route
     );
 
     this.model = new Categoria();
@@ -36,6 +35,10 @@ export class FormularioCategoriaComponent
       this.toastr.error('Por favor informe o nome');
       return;
     }
+  }
+
+  salvo() {
+    this.router.navigate(['categorias']);
   }
 
 }
