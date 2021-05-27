@@ -62,6 +62,8 @@
                 <td>
                     <img *ngIf="produto.imagemSrc" [src]="produto.imagemSrc"
                         width="100">
+                    <img *ngIf="produto.urlImagem" [src]="produto.urlImagem"
+                        width="100">
                 </td>
                 <td>{{produto.nome}}</td>
                 <td>
